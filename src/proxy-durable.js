@@ -25,7 +25,9 @@ export const proxyDurable = (durable, middlewareOptions = {}) => {
 
       try {
         if (typeof id === 'string') {
-          id = durable.idFromName(id)
+          id = id.length === 64
+            ? durable.idFromString(id)
+            : durable.idFromName(id)
         }
 
         const stub = durable.get(id)
